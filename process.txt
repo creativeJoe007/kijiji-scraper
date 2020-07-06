@@ -1,0 +1,9 @@
+Work Flow:
+
+* We login on Kijiji using our login details
+* Accept a query for Kijiji adverts
+* Once we get, we access each link individually
+* We extract description of the item, seller name, price, address
+* We automatically fill the contact box with data
+* We submit the form and try to extract the phone number
+* Extracted data gets saved

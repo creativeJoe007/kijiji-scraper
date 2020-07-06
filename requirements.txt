@@ -1,0 +1,6 @@
+Flask
+webdriver_manager
+selenium
+gunicorn
+eventlet
+argparse
