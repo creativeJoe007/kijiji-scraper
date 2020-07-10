@@ -223,7 +223,6 @@ class Extractor():
    try:
     # Close every modal should any arise
     ActionChains(self._driver).send_keys(Keys.ESCAPE).perform()
-
     self._driver.find_element_by_tag_name('body').screenshot(file_name)
 
    except NoSuchElementException as e:
