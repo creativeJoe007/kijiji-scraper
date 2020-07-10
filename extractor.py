@@ -199,7 +199,8 @@ class Extractor():
         submit_button.click()
         time.sleep(1)
         self.resolve_captcha()
-        time.sleep(3)
+        self.screengrab(self._ad["title"])
+        time.sleep(60)
       except StaleElementReferenceException as e:
         print("Stale element")
         self.send_message(False)
@@ -217,7 +218,16 @@ class Extractor():
 
     while grand_parent_element.is_displayed():
       pass
+  
+  def screengrab(self, file_name: str):
+   try:
+    # Close every modal should any arise
+    ActionChains(self._driver).send_keys(Keys.ESCAPE).perform()
 
+    self._driver.find_element_by_tag_name('body').screenshot(file_name)
+
+   except NoSuchElementException as e:
+     print("Opps, failed")
 
   def scroll_page_randomly(self, scroll_x_times: int):
     from random import randrange
