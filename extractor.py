@@ -50,6 +50,7 @@ class Extractor():
     #---------------------------------------------------------------------------------------
     ads_data = self._driver.find_elements_by_css_selector("div.search-item.regular-ad")
     for ads in ads_data:
+    	time.sleep(30)
       self._ad = {
         "title": "",
         "image": "",
@@ -96,7 +97,7 @@ class Extractor():
       )
 
       self._driver.switch_to.frame(self._driver.find_element_by_id("iframeAuth-undefined"));
-      WebDriverWait(self._driver, 10).until(
+      WebDriverWait(self._driver, 20).until(
         presence_of_element_located((By.CLASS_NAME, "loginForm-1114518310"))
       )
 
@@ -105,11 +106,13 @@ class Extractor():
       password = modal.find_element_by_id("password")
 
       email.send_keys(self.email)
+      time.sleep(10)
       password.send_keys(self.password)
+      time.sleep(10)
 
       modal.find_element_by_css_selector("button.signInButton-1815033393").click()
       # Wait for the loging process to get completed
-      WebDriverWait(self._driver, 10).until(
+      WebDriverWait(self._driver, 20).until(
         staleness_of(modal)
       )
       self._driver.switch_to.default_content()
@@ -131,7 +134,7 @@ class Extractor():
       # We click the reveal button
       reveal_button = number_container.find_element_by_css_selector("button.phoneNumberContainer-69344174").click()
       # We make the system sleep, should the reveal button takes time to change the number
-      time.sleep(3)
+      time.sleep(10)
       self._ad["mobile"] = number_container.find_element_by_css_selector("span.phoneShowNumberButton-1052915314").text
 
     except NoSuchElementException as e:
@@ -190,17 +193,16 @@ class Extractor():
         self.extract_phone_number()
 
         message_field.clear()
-        time.sleep(1)
+        time.sleep(5)
         message_field.send_keys("Hello, what's up")
         submit_button = message_box_container\
           .find_element_by_css_selector("button.submitButton-2507489961.button-1997310527")
         # We click the submit button
-        time.sleep(1)
+        time.sleep(15)
         submit_button.click()
-        time.sleep(1)
         self.resolve_captcha()
         self.screengrab(self._ad["title"])
-        time.sleep(60)
+        time.sleep(30)
       except StaleElementReferenceException as e:
         print("Stale element")
         self.send_message(False)
@@ -223,7 +225,7 @@ class Extractor():
    try:
     # Close every modal should any arise
     ActionChains(self._driver).send_keys(Keys.ESCAPE).perform()
-    self._driver.find_element_by_tag_name('body').screenshot(file_name)
+    self._driver.find_element_by_tag_name('body').screenshot("static/" + file_name)
 
    except NoSuchElementException as e:
      print("Opps, failed")
